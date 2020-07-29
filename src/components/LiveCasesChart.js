@@ -12,7 +12,7 @@ import Card from "../components/Card/Card";
 import CardHeader from "../components/Card/CardHeader.js";
 import CardIcon from "../components/Card/CardIcon.js";
 import CardBody from "../components/Card/CardBody.js";
-
+import CovidContext from '../CovidContext'
 
 import { cardTitle } from "../assets/jss/material-dashboard-pro-react.js";
 
@@ -31,44 +31,63 @@ const styles = {
 
   const useStyles = makeStyles(styles);
 
-function LiveCasesChart() {
+function LiveCasesChart(props) {
     const classes = useStyles();
+
+    const test= ()=>{
+        console.log()
+    }
+
     return (
         <div>
-               <Card >
-          <CardHeader color="rose" icon plain>
-            <CardIcon color="rose">
-              <HotelIcon />
-            </CardIcon>
-            <h4 className={classes.cardIconTitle}>
-              Live Cases By Country
-              <small> - Here is a subtitle for this table</small>
-            </h4>
-          </CardHeader>
-          <CardBody plain>
-            <Table
-              hover
-              tableHead={["Country", "Number positive"]}
-              tableData={[
-                ["USA", "4,248,327",],
-                ["Brazil", "2,348,200"],
-                ["India", "1,337,022", ],
-                [
-                  "Russia",
-                  "800,849",
-               
-                ],
-                [
-                  "Mexico",
-                  "421,996",
-                ],
-                ["Peru", "378,285"]
-              ]}
-            />
-          </CardBody>
-        </Card>
+              <CovidContext.Consumer >
+                  {(Data)=> {
+                      console.log(Data.globalData[0])
+                    
+                      
+                        return (
+                   <Card >
+              <CardHeader color="rose" icon plain>
+                <CardIcon color="rose">
+                  <HotelIcon />
+                </CardIcon>
+                <h4 className={classes.cardIconTitle}>
+                  Live Cases By Country
+                  <small> - Here is a subtitle for this table</small>
+                </h4>
+              </CardHeader>
+              <CardBody plain>
+                <Table
+                  hover
+                  tableHead={["Country", "Number positive"]}
+                  tableData={[
+                    ["USA", "4,248,327",],
+                    ["Brazil", "2,348,200"],
+                    ["India", "1,337,022", ],
+                    [
+                      "Russia",
+                      "800,849",
+                   
+                    ],
+                    [
+                      "Mexico",
+                      "421,996",
+                    ],
+                    ["Peru", "378,285"]
+                  ]}
+                />
+              </CardBody>
+            </Card>
+      
+         
+                
+                }}
+              </CovidContext.Consumer>
+         
         </div>
-    )
+        
+    ) 
+    
 }
 
 export default LiveCasesChart
