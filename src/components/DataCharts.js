@@ -20,6 +20,7 @@ import CardBody from "../components/Card/CardBody.js";
 import CardFooter from "../components/Card/CardFooter.js";
 import Tooltip from "@material-ui/core/Tooltip";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import AccessTime from "@material-ui/icons/AccessTime";
 import Refresh from "@material-ui/icons/Refresh";
 import Edit from "@material-ui/icons/Edit";
@@ -169,7 +170,64 @@ function  DataCharts () {
               }
             }
           };
-       
+
+            let casePercentage;
+          if (Math.sign(getPercentageChange(casesList[185],casesList[186])) ===1) {
+            casePercentage =    <p className={classes.cardCategory}>
+            <span className={classes.successText}>
+              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange(casesList[185],casesList[186])}%
+            </span>{" "}
+            increase in the last 24hr.
+            
+          </p>
+          } else {
+            casePercentage = <p className={classes.cardCategory}>
+            <span className={classes.dangerText}>
+              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange(casesList[185],casesList[186])}%
+            </span>{" "}
+            decrease in the last 24hr.
+        
+          </p>
+          }
+
+          let recoveredPercentage;
+          if (Math.sign(getPercentageChange( recoveredList[185], recoveredList[186])) ===1) {
+            recoveredPercentage =    <p className={classes.cardCategory}>
+            <span className={classes.successText}>
+              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange( recoveredList[185], recoveredList[186])}%
+            </span>{" "}
+            increase in the last 24hr.
+            
+          </p>
+          } else {
+            recoveredPercentage = <p className={classes.cardCategory}>
+            <span className={classes.dangerText}>
+              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange( recoveredList[185], recoveredList[186])}%
+            </span>{" "}
+            decrease in the last 24hr.
+        
+          </p>
+          }
+
+          let deathPercentage;
+          if (Math.sign(getPercentageChange( deathList[185], deathList[186])) ===1) {
+            deathPercentage =    <p className={classes.cardCategory}>
+            <span className={classes.successText}>
+              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange( deathList[185], deathList[186])}%
+            </span>{" "}
+            increase in the last 24hr.
+            
+          </p>
+          } else {
+            deathPercentage = <p className={classes.cardCategory}>
+            <span className={classes.dangerText}>
+              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange( deathList[185], deathList[186])}%
+            </span>{" "}
+            decrease in the last 24hr.
+        
+          </p>
+          }
+
         return (
             <div>
                   <GridContainer>
@@ -188,12 +246,7 @@ function  DataCharts () {
              
               <h4 className={classes.cardTitle}>Corona Virus Cases</h4>
               <p>A total of <span className={classes.warningText}>{casesList[186]}</span> as of {getCurrentDate()}</p>
-              <p className={classes.cardCategory}>
-                <span className={classes.successText}>
-                  <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange(casesList[185],casesList[186])}
-                </span>{" "}
-                increase in the last 24hr.
-              </p>
+           { casePercentage}
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>
@@ -219,12 +272,7 @@ function  DataCharts () {
              
               <h4 className={classes.cardTitle}>Recovered</h4>
               <p>A total of <span className={classes.successText}>{recoveredList[186]}</span> as of {getCurrentDate()}</p>
-              <p className={classes.cardCategory}>
-                <span className={classes.successText}>
-                  <ArrowUpward className={classes.upArrowCardCategory} /> 15%
-                </span>{" "}
-                increase in the last 24hr.
-              </p>
+             {recoveredPercentage}
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>
@@ -249,12 +297,7 @@ function  DataCharts () {
    
               <h4 className={classes.cardTitle}>Deaths</h4>
               <p>A total of <span  className={classes.dangerText}>{deathList[186]}</span> as of {getCurrentDate()}</p>
-              <p className={classes.cardCategory}>
-                <span className={classes.successText}>
-                  <ArrowUpward className={classes.upArrowCardCategory} /> 6%
-                </span>{" "}
-                increase in the last 24hr.
-              </p>
+              {deathPercentage}
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>

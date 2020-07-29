@@ -77,6 +77,10 @@ const dashboardStyle = {
     width: 14,
     height: 14
   },
+  downArrowCardCategory:{
+    width:14,
+    height:14
+  },
   underChartIcons: {
     width: "17px",
     height: "17px"
