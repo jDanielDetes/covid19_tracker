@@ -2,7 +2,9 @@ import {
   successColor,
   tooltip,
   cardTitle,
-  grayColor
+  grayColor,
+  dangerColor,
+  warningColor
 } from "../../material-dashboard-pro-react";
 
 import hoverCardStyle from "../../material-dashboard-pro-react/hoverCardStyle";
@@ -64,6 +66,12 @@ const dashboardStyle = {
   },
   successText: {
     color: successColor[0]
+  },
+  warningText: {
+    color: warningColor[0]
+  },
+  dangerText: {
+    color: dangerColor[0]
   },
   upArrowCardCategory: {
     width: 14,

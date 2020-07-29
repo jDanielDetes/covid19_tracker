@@ -25,6 +25,8 @@ import Refresh from "@material-ui/icons/Refresh";
 import Edit from "@material-ui/icons/Edit";
 import Button from "../components/CustomButtons/Button";
 import axios from 'axios'
+import {getCurrentDate} from './grabDate'
+import{getPercentageChange} from './getPercentageChange'
 
 
 
@@ -47,7 +49,9 @@ function  DataCharts () {
     const[casesList,setCasesList]= React.useState([])
     const[recoveredList,setRecoveredList]= React.useState([])
     const[deathList,setDeathList]= React.useState([])
-    const [chartMax,setChartMax] = React.useState(20000)
+    const [caseChartMax,setCaseChartMax] = React.useState(20000)
+    const [recoveredChartMax,setRecoveredChartMax] = React.useState(20000)
+    const [deathChartMax,setDeathChartMax] = React.useState(20000)
 
     useEffect(() => {
         axios.get(API).then((res) => {
@@ -57,9 +61,13 @@ function  DataCharts () {
           const recoveredObj=(res.data.timeline.recovered)  
           const  recoveredArry = Object.values( recoveredObj)
           setRecoveredList(recoveredArry)
+          const deathObj=(res.data.timeline.deaths)  
+          const  deathArry = Object.values( deathObj)
+          setDeathList(deathArry)
+          console.log(deathArry)
         });
       }, [country]);
-      const API = `https://disease.sh/v3/covid-19/historical/Afghanistan?lastdays=7`;
+      const API = `https://disease.sh/v3/covid-19/historical/Afghanistan?lastdays=all`;
       
         const test= ()=>{
             console.log(  )
@@ -68,8 +76,10 @@ function  DataCharts () {
 
       
             const test2= ()=>{
-                setChartMax(Math.max(...casesList))
-
+                setCaseChartMax(Math.max(...casesList))
+                setRecoveredChartMax(Math.max(...recoveredList))
+                setDeathChartMax(Math.max(...deathList))
+                
                 
             }
           
@@ -78,23 +88,23 @@ function  DataCharts () {
 
         const dailySalesChart = {
             casesData: {
-              labels: ["M", "T", "W", "T", "F", "S", "S"],
-              series: [[casesList[0], casesList[1], casesList[2], casesList[3], casesList[4], casesList[5],casesList[6]]] 
+              labels: ["Jan", "Feb", "March", "April", "May", "June", "July",],
+              series: [[casesList[6], casesList[36], casesList[66], casesList[96], casesList[126], casesList[156],casesList[186]]] 
             },
             recoveredData: {
-                labels: ["M", "T", "W", "T", "F", "S", "S"],
-                series: [[recoveredList[0], recoveredList[1], recoveredList[2], recoveredList[3], recoveredList[4], recoveredList[5],recoveredList[6]]] 
+                labels: ["Jan", "Feb", "March", "April", "May", "June", "July",],
+                series: [[recoveredList[6], recoveredList[36], recoveredList[66], recoveredList[96], recoveredList[126], recoveredList[156],recoveredList[186]]] 
               },
               deathData: {
                 labels: ["M", "T", "W", "T", "F", "S", "S"],
-                series: [[deathList[0], deathList[1], deathList[2], deathList[3], deathList[4], deathList[5],deathList[6]]] 
+                series: [[deathList[6], deathList[36], deathList[66], deathList[96], deathList[126], deathList[156],deathList[186]]] 
               },
             casesOptions: {
               lineSmooth: Chartist.Interpolation.cardinal({
                 tension: 0
               }),
               low: 0,
-              high: chartMax, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+              high: caseChartMax, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
               chartPadding: {
                 top: 0,
                 right: 0,
@@ -107,7 +117,7 @@ function  DataCharts () {
                   tension: 0
                 }),
                 low: 0,
-                high: chartMax, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+                high: recoveredChartMax, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
                 chartPadding: {
                   top: 0,
                   right: 0,
@@ -120,7 +130,7 @@ function  DataCharts () {
                   tension: 0
                 }),
                 low: 0,
-                high: chartMax, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+                high: deathChartMax, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
                 chartPadding: {
                   top: 0,
                   right: 0,
@@ -164,8 +174,8 @@ function  DataCharts () {
             <div>
                   <GridContainer>
         <GridItem xs={12} sm={12} md={4}>
-          <Card chart className={classes.cardHover}>
-            <CardHeader color="warning" className={classes.cardHeaderHover}>
+          <Card chart >
+            <CardHeader color="warning">
               <ChartistGraph
                 className="ct-chart-white-colors"
                 data={dailySalesChart.casesData}
@@ -175,32 +185,12 @@ function  DataCharts () {
               />
             </CardHeader>
             <CardBody>
-              <div className={classes.cardHoverUnder}>
-                <Tooltip
-                  id="tooltip-top"
-                  title="Refresh"
-                  placement="bottom"
-                  classes={{ tooltip: classes.tooltip }}
-                >
-                  <Button simple color="info" justIcon>
-                    <Refresh className={classes.underChartIcons} />
-                  </Button>
-                </Tooltip>
-                <Tooltip
-                  id="tooltip-top"
-                  title="Change Date"
-                  placement="bottom"
-                  classes={{ tooltip: classes.tooltip }}
-                >
-                  <Button color="transparent" simple justIcon>
-                    <Edit className={classes.underChartIcons} />
-                  </Button>
-                </Tooltip>
-              </div>
+             
               <h4 className={classes.cardTitle}>Corona Virus Cases</h4>
+              <p>A total of <span className={classes.warningText}>{casesList[186]}</span> as of {getCurrentDate()}</p>
               <p className={classes.cardCategory}>
                 <span className={classes.successText}>
-                  <ArrowUpward className={classes.upArrowCardCategory} /> 55%
+                  <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange(casesList[185],casesList[186])}
                 </span>{" "}
                 increase in the last 24hr.
               </p>
@@ -215,8 +205,8 @@ function  DataCharts () {
         </GridItem>
       
         <GridItem xs={12} sm={12} md={4}>
-          <Card chart className={classes.cardHover}>
-            <CardHeader color="success" className={classes.cardHeaderHover}>
+          <Card chart>
+            <CardHeader color="success" >
               <ChartistGraph
                 className="ct-chart-white-colors"
                 data={dailySalesChart.recoveredData}
@@ -226,29 +216,9 @@ function  DataCharts () {
               />
             </CardHeader>
             <CardBody>
-              <div className={classes.cardHoverUnder}>
-                <Tooltip
-                  id="tooltip-top"
-                  title="Refresh"
-                  placement="bottom"
-                  classes={{ tooltip: classes.tooltip }}
-                >
-                  <Button simple color="info" justIcon>
-                    <Refresh className={classes.underChartIcons} />
-                  </Button>
-                </Tooltip>
-                <Tooltip
-                  id="tooltip-top"
-                  title="Change Date"
-                  placement="bottom"
-                  classes={{ tooltip: classes.tooltip }}
-                >
-                  <Button color="transparent" simple justIcon>
-                    <Edit className={classes.underChartIcons} />
-                  </Button>
-                </Tooltip>
-              </div>
+             
               <h4 className={classes.cardTitle}>Recovered</h4>
+              <p>A total of <span className={classes.successText}>{recoveredList[186]}</span> as of {getCurrentDate()}</p>
               <p className={classes.cardCategory}>
                 <span className={classes.successText}>
                   <ArrowUpward className={classes.upArrowCardCategory} /> 15%
@@ -265,8 +235,8 @@ function  DataCharts () {
         </GridItem>
 
         <GridItem xs={12} sm={12} md={4}>
-          <Card chart className={classes.cardHover}>
-            <CardHeader color="danger" className={classes.cardHeaderHover}>
+          <Card chart>
+            <CardHeader color="danger" >
               <ChartistGraph
                 className="ct-chart-white-colors"
                 data={dailySalesChart.deathData}
@@ -276,29 +246,9 @@ function  DataCharts () {
               />
             </CardHeader>
             <CardBody>
-              <div className={classes.cardHoverUnder}>
-                <Tooltip
-                  id="tooltip-top"
-                  title="Refresh"
-                  placement="bottom"
-                  classes={{ tooltip: classes.tooltip }}
-                >
-                  <Button simple color="info" justIcon>
-                    <Refresh className={classes.underChartIcons} />
-                  </Button>
-                </Tooltip>
-                <Tooltip
-                  id="tooltip-top"
-                  title="Change Date"
-                  placement="bottom"
-                  classes={{ tooltip: classes.tooltip }}
-                >
-                  <Button color="transparent" simple justIcon>
-                    <Edit className={classes.underChartIcons} />
-                  </Button>
-                </Tooltip>
-              </div>
+   
               <h4 className={classes.cardTitle}>Deaths</h4>
+              <p>A total of <span  className={classes.dangerText}>{deathList[186]}</span> as of {getCurrentDate()}</p>
               <p className={classes.cardCategory}>
                 <span className={classes.successText}>
                   <ArrowUpward className={classes.upArrowCardCategory} /> 6%
