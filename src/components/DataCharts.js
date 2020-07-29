@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 //react plugin for creating charts
 import ChartistGraph from "react-chartist";
 
@@ -24,25 +24,141 @@ import AccessTime from "@material-ui/icons/AccessTime";
 import Refresh from "@material-ui/icons/Refresh";
 import Edit from "@material-ui/icons/Edit";
 import Button from "../components/CustomButtons/Button";
+import axios from 'axios'
 
 
-import {
-    dailySalesChart,
-    emailsSubscriptionChart,
-    completedTasksChart
-  } from "../variables/charts";
+
   
   import styles from "../assets/jss/material-dashboard-pro-react/views/dashboardStyle.js"
 
 
-  const useStyles = makeStyles(styles);
 
- 
+  const useStyles = makeStyles(styles);
+  var Chartist = require("chartist");
+  var delays = 80,
+    durations = 500;
+
+  
+  
 
 function  DataCharts () {
     const classes = useStyles();
+    const[country,setCountry] = React.useState("Afghanistan")
+    const[casesList,setCasesList]= React.useState([])
+    const[recoveredList,setRecoveredList]= React.useState([])
+    const[deathList,setDeathList]= React.useState([])
+    const [chartMax,setChartMax] = React.useState(20000)
 
+    useEffect(() => {
+        axios.get(API).then((res) => {
+          const caseObj=(res.data.timeline.cases)  
+          const caseArry = Object.values(caseObj)
+          setCasesList(caseArry)
+          const recoveredObj=(res.data.timeline.recovered)  
+          const  recoveredArry = Object.values( recoveredObj)
+          setRecoveredList(recoveredArry)
+        });
+      }, [country]);
+      const API = `https://disease.sh/v3/covid-19/historical/Afghanistan?lastdays=7`;
+      
+        const test= ()=>{
+            console.log(  )
+          
+        }
 
+      
+            const test2= ()=>{
+                setChartMax(Math.max(...casesList))
+
+                
+            }
+          
+
+     
+
+        const dailySalesChart = {
+            casesData: {
+              labels: ["M", "T", "W", "T", "F", "S", "S"],
+              series: [[casesList[0], casesList[1], casesList[2], casesList[3], casesList[4], casesList[5],casesList[6]]] 
+            },
+            recoveredData: {
+                labels: ["M", "T", "W", "T", "F", "S", "S"],
+                series: [[recoveredList[0], recoveredList[1], recoveredList[2], recoveredList[3], recoveredList[4], recoveredList[5],recoveredList[6]]] 
+              },
+              deathData: {
+                labels: ["M", "T", "W", "T", "F", "S", "S"],
+                series: [[deathList[0], deathList[1], deathList[2], deathList[3], deathList[4], deathList[5],deathList[6]]] 
+              },
+            casesOptions: {
+              lineSmooth: Chartist.Interpolation.cardinal({
+                tension: 0
+              }),
+              low: 0,
+              high: chartMax, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+              chartPadding: {
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 20
+              }
+            },
+            recoveredOptions: {
+                lineSmooth: Chartist.Interpolation.cardinal({
+                  tension: 0
+                }),
+                low: 0,
+                high: chartMax, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+                chartPadding: {
+                  top: 0,
+                  right: 0,
+                  bottom: 0,
+                  left: 20
+                }
+              },
+              deathOptions: {
+                lineSmooth: Chartist.Interpolation.cardinal({
+                  tension: 0
+                }),
+                low: 0,
+                high: chartMax, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+                chartPadding: {
+                  top: 0,
+                  right: 0,
+                  bottom: 0,
+                  left: 20
+                }
+              },
+            // for animation
+            animation: {
+              draw: function(data) {
+                if (data.type === "line" || data.type === "area") {
+                  data.element.animate({
+                    d: {
+                      begin: 600,
+                      dur: 700,
+                      from: data.path
+                        .clone()
+                        .scale(1, 0)
+                        .translate(0, data.chartRect.height())
+                        .stringify(),
+                      to: data.path.clone().stringify(),
+                      easing: Chartist.Svg.Easing.easeOutQuint
+                    }
+                  });
+                } else if (data.type === "point") {
+                  data.element.animate({
+                    opacity: {
+                      begin: (data.index + 1) * delays,
+                      dur: durations,
+                      from: 0,
+                      to: 1,
+                      easing: "ease"
+                    }
+                  });
+                }
+              }
+            }
+          };
        
         return (
             <div>
@@ -52,9 +168,9 @@ function  DataCharts () {
             <CardHeader color="warning" className={classes.cardHeaderHover}>
               <ChartistGraph
                 className="ct-chart-white-colors"
-                data={dailySalesChart.data}
+                data={dailySalesChart.casesData}
                 type="Line"
-                options={dailySalesChart.options}
+                options={dailySalesChart.casesOptions}
                 listener={dailySalesChart.animation}
               />
             </CardHeader>
@@ -92,6 +208,7 @@ function  DataCharts () {
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime /> updated 4 minutes ago
+                <button onClick={test2}>d</button>
               </div>
             </CardFooter>
           </Card>
@@ -102,9 +219,9 @@ function  DataCharts () {
             <CardHeader color="success" className={classes.cardHeaderHover}>
               <ChartistGraph
                 className="ct-chart-white-colors"
-                data={dailySalesChart.data}
+                data={dailySalesChart.recoveredData}
                 type="Line"
-                options={dailySalesChart.options}
+                options={dailySalesChart.recoveredOptions}
                 listener={dailySalesChart.animation}
               />
             </CardHeader>
@@ -152,9 +269,9 @@ function  DataCharts () {
             <CardHeader color="danger" className={classes.cardHeaderHover}>
               <ChartistGraph
                 className="ct-chart-white-colors"
-                data={dailySalesChart.data}
+                data={dailySalesChart.deathData}
                 type="Line"
-                options={dailySalesChart.options}
+                options={dailySalesChart.deathOptions}
                 listener={dailySalesChart.animation}
               />
             </CardHeader>

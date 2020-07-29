@@ -13,6 +13,7 @@ import CardHeader from "../components/Card/CardHeader.js";
 import CardIcon from "../components/Card/CardIcon.js";
 import CardBody from "../components/Card/CardBody.js";
 import CovidContext from '../CovidContext'
+import '../liveCases.css'
 
 import { cardTitle } from "../assets/jss/material-dashboard-pro-react.js";
 
@@ -26,6 +27,14 @@ const styles = {
       ...cardTitle,
       marginTop: "15px",
       marginBottom: "0px"
+    },
+    scroll:{
+        
+
+            height: "100px",    
+      
+         
+        
     }
   };
 
@@ -56,9 +65,10 @@ function LiveCasesChart(props) {
                   <small> - Here is a subtitle for this table</small>
                 </h4>
               </CardHeader>
-              <CardBody plain>
-                <Table
+              <CardBody plain >
+                <Table 
                   hover
+                 
                   tableHead={["Country", "Number positive"]}
                
                  tableData= {[...Data.globalData.map((data) =>(
