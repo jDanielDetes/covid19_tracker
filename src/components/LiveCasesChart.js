@@ -60,27 +60,18 @@ function LiveCasesChart(props) {
                 <Table
                   hover
                   tableHead={["Country", "Number positive"]}
-                  tableData={[
-                    ["USA", "4,248,327",],
-                    ["Brazil", "2,348,200"],
-                    ["India", "1,337,022", ],
-                    [
-                      "Russia",
-                      "800,849",
-                   
-                    ],
-                    [
-                      "Mexico",
-                      "421,996",
-                    ],
-                    ["Peru", "378,285"]
-                  ]}
-                />
+               
+                 tableData= {[...Data.globalData.map((data) =>(
+                  
+                    [data.country, data.cases]
+              ))]}
+                
+                ></Table>
               </CardBody>
             </Card>
       
          
-                
+                        )
                 }}
               </CovidContext.Consumer>
          
