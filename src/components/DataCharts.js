@@ -4,7 +4,7 @@ import ChartistGraph from "react-chartist";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-
+import { MenuItem, FormControl, Select} from "@material-ui/core";
 // @material-ui/icons
 import Timeline from "@material-ui/icons/Timeline";
 
@@ -31,6 +31,7 @@ import{getPercentageChange} from './getPercentageChange'
 
 
 
+
   
   import styles from "../assets/jss/material-dashboard-pro-react/views/dashboardStyle.js"
 import { control } from 'leaflet';
@@ -45,7 +46,7 @@ import { control } from 'leaflet';
   
   
 
-function  DataCharts () {
+function  DataCharts (props) {
     const classes = useStyles();
     const[country,setCountry] = React.useState("Afghanistan")
     const[casesList,setCasesList]= React.useState([])
@@ -54,6 +55,8 @@ function  DataCharts () {
     const [caseChartMax,setCaseChartMax] = React.useState(20000)
     const [recoveredChartMax,setRecoveredChartMax] = React.useState(20000)
     const [deathChartMax,setDeathChartMax] = React.useState(20000)
+    const[percent,setpercent] =React.useState()
+
 
     useEffect(() => {
         axios.get(API).then((res) => {
@@ -70,15 +73,14 @@ function  DataCharts () {
             setCaseChartMax(Math.max(...caseArry))
             setRecoveredChartMax(Math.max(...recoveredArry))
             setDeathChartMax(Math.max(...deathArry))
+            
         });
       }, [country]);
       const API = `https://disease.sh/v3/covid-19/historical/${country}?lastdays=all`;
       
         const test= ()=>{
-            setCountry('usa')
-            
-          console.log(country)
-          console.log(dailySalesChart.casesData.series[0][5])
+
+      
         }
 
       
@@ -87,7 +89,7 @@ function  DataCharts () {
                 setRecoveredChartMax(Math.max(...recoveredList))
                 setDeathChartMax(Math.max(...deathList))
                 
-               
+                
             }
           
 
@@ -178,21 +180,24 @@ function  DataCharts () {
           };
 
             let casePercentage;
-          if (Math.sign(getPercentageChange(casesList[186],casesList[144])) ===1) {
+          if (Math.sign(getPercentageChange(casesList[156],casesList[186])) ===1) {
             casePercentage =    <p className={classes.cardCategory}>
             <span className={classes.successText}>
-              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange(dailySalesChart.casesData.series[5],dailySalesChart.casesData.series[6])}%
+              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange(casesList[156],casesList[186])}%
             </span>{" "}
-            increase in the last 24hr.
+            increase in the last month.
             
           </p>
           } else {
             casePercentage = <p className={classes.cardCategory}>
             <span className={classes.dangerText}>
-              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange(casesList[185],casesList[186])}%
+              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange(casesList[156],casesList[186])}%
+          
             </span>{" "}
-            decrease in the last 24hr.
-        
+            decrease in the last Month.
+            {casesList[156]}
+            <br/>
+            {casesList[186]}
           </p>
           }
 
@@ -234,7 +239,28 @@ function  DataCharts () {
           </p>
           }
 
+          const onCountryChange= (e) =>{
+              console.log(e.target.value)
+              setCountry(e.target.value)
+          }
+            
+            const countrySelect= (
+             
+                    <div>
+                        <FormControl className="app__dropdown">
+            <Select variant="outlined" onChange={onCountryChange} value={country}>
+              {props.data.map((country) => (
+                <MenuItem value={country.country}>{country.country}</MenuItem>
+              ))}
+            </Select>
+            <h1>hi</h1>
+          </FormControl>
+                    </div>
+            )
+            
+
         return (
+            
             <div>
                   <GridContainer>
         <GridItem xs={12} sm={12} md={4}>
@@ -283,6 +309,7 @@ function  DataCharts () {
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime /> updated 4 minutes ago
+           
               </div>
             </CardFooter>
           </Card>
@@ -304,6 +331,7 @@ function  DataCharts () {
               <h4 className={classes.cardTitle}>Deaths</h4>
               <p>A total of <span  className={classes.dangerText}>{deathList[186]}</span> as of {getCurrentDate()}</p>
               {deathPercentage}
+     
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>
@@ -313,6 +341,9 @@ function  DataCharts () {
           </Card>
         </GridItem>
       </GridContainer>
+            {countrySelect}
+            
+      
             </div>
         )
     

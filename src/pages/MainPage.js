@@ -8,7 +8,7 @@ import GridContainer from "../components/Grid/GridContainer.js";
 import GridItem from "../components/Grid/GridItem.js";
 import axios from "axios";
 import CovidContext from "../CovidContext";
-
+import { MenuItem, FormControl, Select, Card, CardContent } from "@material-ui/core";
 function MainPage() {
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
   const [mapZoom, setMapZoom] = useState(3);
@@ -27,10 +27,16 @@ function MainPage() {
       globalData
   }),[globalData])
 
+  const test = globalData
+  
+
+  
+  
+  
   return (
     <div>
     <CovidContext.Provider value={value}>
-          <DataCharts />
+          <DataCharts data={test} />
           <Map center={mapCenter} zoom={mapZoom} />
           <LiveCasesChart/>
       
