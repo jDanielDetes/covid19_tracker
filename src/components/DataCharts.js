@@ -33,6 +33,7 @@ import{getPercentageChange} from './getPercentageChange'
 
   
   import styles from "../assets/jss/material-dashboard-pro-react/views/dashboardStyle.js"
+import { control } from 'leaflet';
 
 
 
@@ -65,14 +66,19 @@ function  DataCharts () {
           const deathObj=(res.data.timeline.deaths)  
           const  deathArry = Object.values( deathObj)
           setDeathList(deathArry)
-          console.log(deathArry)
+         
+            setCaseChartMax(Math.max(...caseArry))
+            setRecoveredChartMax(Math.max(...recoveredArry))
+            setDeathChartMax(Math.max(...deathArry))
         });
       }, [country]);
-      const API = `https://disease.sh/v3/covid-19/historical/Afghanistan?lastdays=all`;
+      const API = `https://disease.sh/v3/covid-19/historical/${country}?lastdays=all`;
       
         const test= ()=>{
-            console.log(  )
-          
+            setCountry('usa')
+            
+          console.log(country)
+          console.log(dailySalesChart.casesData.series[0][5])
         }
 
       
@@ -81,7 +87,7 @@ function  DataCharts () {
                 setRecoveredChartMax(Math.max(...recoveredList))
                 setDeathChartMax(Math.max(...deathList))
                 
-                
+               
             }
           
 
@@ -172,10 +178,10 @@ function  DataCharts () {
           };
 
             let casePercentage;
-          if (Math.sign(getPercentageChange(casesList[185],casesList[186])) ===1) {
+          if (Math.sign(getPercentageChange(casesList[186],casesList[144])) ===1) {
             casePercentage =    <p className={classes.cardCategory}>
             <span className={classes.successText}>
-              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange(casesList[185],casesList[186])}%
+              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange(dailySalesChart.casesData.series[5],dailySalesChart.casesData.series[6])}%
             </span>{" "}
             increase in the last 24hr.
             
@@ -191,10 +197,10 @@ function  DataCharts () {
           }
 
           let recoveredPercentage;
-          if (Math.sign(getPercentageChange( recoveredList[185], recoveredList[186])) ===1) {
+          if (Math.sign(getPercentageChange( recoveredList[188], recoveredList[189])) ===1) {
             recoveredPercentage =    <p className={classes.cardCategory}>
             <span className={classes.successText}>
-              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange( recoveredList[185], recoveredList[186])}%
+              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange( recoveredList[188], recoveredList[189])}%
             </span>{" "}
             increase in the last 24hr.
             
@@ -202,7 +208,7 @@ function  DataCharts () {
           } else {
             recoveredPercentage = <p className={classes.cardCategory}>
             <span className={classes.dangerText}>
-              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange( recoveredList[185], recoveredList[186])}%
+              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange( recoveredList[188], recoveredList[189])}%
             </span>{" "}
             decrease in the last 24hr.
         
@@ -210,10 +216,10 @@ function  DataCharts () {
           }
 
           let deathPercentage;
-          if (Math.sign(getPercentageChange( deathList[185], deathList[186])) ===1) {
+          if (Math.sign(getPercentageChange( deathList[188], deathList[189])) ===1) {
             deathPercentage =    <p className={classes.cardCategory}>
             <span className={classes.successText}>
-              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange( deathList[185], deathList[186])}%
+              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange( deathList[188], deathList[189])}%
             </span>{" "}
             increase in the last 24hr.
             
@@ -221,7 +227,7 @@ function  DataCharts () {
           } else {
             deathPercentage = <p className={classes.cardCategory}>
             <span className={classes.dangerText}>
-              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange( deathList[185], deathList[186])}%
+              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange( deathList[188], deathList[189])}%
             </span>{" "}
             decrease in the last 24hr.
         
@@ -251,7 +257,7 @@ function  DataCharts () {
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime /> updated 4 minutes ago
-                <button onClick={test2}>d</button>
+                <button onClick={test}>d</button>
               </div>
             </CardFooter>
           </Card>
