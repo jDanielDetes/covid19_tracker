@@ -41,12 +41,17 @@ function LiveCasesChart(props) {
     console.log();
   };
 
+
+
   return (
     <div>
       <CovidContext.Consumer>
         {(Data) => {
-          console.log(Data.globalData[0]);
+          console.log(Data);
 
+          const testonClick= () =>{
+    
+          }
           return (
             <Card>
               <CardHeader color="rose" icon plain>

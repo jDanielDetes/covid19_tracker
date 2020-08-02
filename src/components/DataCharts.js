@@ -253,7 +253,7 @@ function  DataCharts (props) {
                 <MenuItem value={country.country}>{country.country}</MenuItem>
               ))}
             </Select>
-            <h1>hi</h1>
+        
           </FormControl>
                     </div>
             )
