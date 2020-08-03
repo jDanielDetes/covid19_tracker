@@ -39,7 +39,7 @@ function MainPage() {
     <div>
     <CovidContext.Provider value={value}>
           <DataCharts data={test} />
-          <Map center={mapCenter} zoom={mapZoom} countries={globalData}/>
+          <Map center={mapCenter} zoom={mapZoom} countries={test}/>
           <LiveCasesChart/>
       
     </CovidContext.Provider>
