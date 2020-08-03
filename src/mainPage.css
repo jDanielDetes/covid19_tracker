@@ -5,6 +5,8 @@ body{
 .mainApp{
     display: flex;
     justify-content: space-between;
+
+    
 }
 
 
@@ -21,3 +23,8 @@ margin-left: 1rem;
 
 }
 
+@media(max-width:510px) {
+   .mainApp{
+    display:block
+   }
+}

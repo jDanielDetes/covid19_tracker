@@ -17,7 +17,7 @@ import {
 } from "@material-ui/core";
 
 function MainPage() {
-  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
+  const [mapCenter, setMapCenter] = useState({ lat: 38, lng: -97 });
   const [mapZoom, setMapZoom] = useState(3);
   const [globalData, setGlobalData] = React.useState([]);
 

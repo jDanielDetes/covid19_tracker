@@ -14,7 +14,7 @@ import CardIcon from "../components/Card/CardIcon.js";
 import CardBody from "../components/Card/CardBody.js";
 import CovidContext from "../CovidContext";
 import "../liveCases.css";
-
+import numeral from "numeral";
 import { cardTitle } from "../assets/jss/material-dashboard-pro-react.js";
 
 const styles = {
@@ -60,7 +60,7 @@ function LiveCasesChart(props) {
                 </CardIcon>
                 <h4 className={classes.cardIconTitle}>
                   Live Cases By Country
-                  <small> - Here is a subtitle for this table</small>
+                  <small> </small>
                 </h4>
               </CardHeader>
               <CardBody plain>
@@ -71,7 +71,7 @@ function LiveCasesChart(props) {
                       tableData={[
                         ...Data.globalData.map((data) => [
                           data.country,
-                          data.cases,
+                          numeral(data.cases).format("0,0"),
                         ]),
                       ]}
                     ></Table>

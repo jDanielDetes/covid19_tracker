@@ -1,0 +1,17 @@
+.header__select{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+
+
+
+}
+
+.title{
+    color: red;
+}
+
+.country__select{
+    background-color: white;
+}

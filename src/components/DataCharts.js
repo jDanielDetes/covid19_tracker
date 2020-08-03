@@ -29,6 +29,7 @@ import axios from 'axios'
 import {getCurrentDate} from './grabDate'
 import{getPercentageChange} from './getPercentageChange'
 import numeral from "numeral"; // to format numbers in a certain way
+import '../dataChart.css'
 
 
 
@@ -48,7 +49,7 @@ import { control } from 'leaflet';
 
 function  DataCharts (props) {
     const classes = useStyles();
-    const[country,setCountry] = React.useState("Afghanistan")
+    const[country,setCountry] = React.useState("USA")
     const[casesList,setCasesList]= React.useState([])
     const[recoveredList,setRecoveredList]= React.useState([])
     const[deathList,setDeathList]= React.useState([])
@@ -78,20 +79,10 @@ function  DataCharts (props) {
       }, [country]);
       const API = `https://disease.sh/v3/covid-19/historical/${country}?lastdays=all`;
       
-        const test= ()=>{
 
-            console.log(casesList.slice(-31)[0])
-            console.log(casesList)
-        }
 
       
-            const test2= ()=>{
-                setCaseChartMax(Math.max(...casesList))
-                setRecoveredChartMax(Math.max(...recoveredList))
-                setDeathChartMax(Math.max(...deathList))
-                
-                
-            }
+        
          
 
         const dailySalesChart = {
@@ -259,9 +250,9 @@ function  DataCharts (props) {
         return (
             
             <div>
-              <div className="header__">
-                    <h1 className="title">COVID-19 TRACKER</h1>
-                    {countrySelect}
+              <div className="header__select">
+                    <h2 className="title">COVID-19 TRACKER</h2>
+                  <div className="country__select">  {countrySelect}</div>
               </div>
                   <GridContainer>
         <GridItem xs={12} sm={12} md={4}>
@@ -284,7 +275,7 @@ function  DataCharts (props) {
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime /> updated 4 minutes ago
-                <button onClick={test}>d</button>
+               
               </div>
             </CardFooter>
           </Card>
@@ -336,7 +327,7 @@ function  DataCharts (props) {
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>
-                <AccessTime /> updated 2 minutes ago
+                <AccessTime /> updated 4 minutes ago
               </div>
             </CardFooter>
           </Card>
