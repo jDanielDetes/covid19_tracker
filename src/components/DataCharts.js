@@ -28,7 +28,7 @@ import Button from "../components/CustomButtons/Button";
 import axios from 'axios'
 import {getCurrentDate} from './grabDate'
 import{getPercentageChange} from './getPercentageChange'
-
+import numeral from "numeral"; // to format numbers in a certain way
 
 
 
@@ -80,7 +80,8 @@ function  DataCharts (props) {
       
         const test= ()=>{
 
-      
+            console.log(casesList.slice(-31)[0])
+            console.log(casesList)
         }
 
       
@@ -91,22 +92,20 @@ function  DataCharts (props) {
                 
                 
             }
-          
-
-     
+         
 
         const dailySalesChart = {
             casesData: {
               labels: ["Jan", "Feb", "March", "April", "May", "June", "July",],
-              series: [[casesList[6], casesList[36], casesList[66], casesList[96], casesList[126], casesList[156],casesList[186]]] 
+              series: [[casesList.slice(-181)[0],casesList.slice(-151)[0],casesList.slice(-121)[0], casesList.slice(-91)[0],casesList.slice(-61)[0], casesList.slice(-31)[0],casesList.slice(-1)[0]]] 
             },
             recoveredData: {
                 labels: ["Jan", "Feb", "March", "April", "May", "June", "July",],
-                series: [[recoveredList[6], recoveredList[36], recoveredList[66], recoveredList[96], recoveredList[126], recoveredList[156],recoveredList[186]]] 
+                series: [[ recoveredList.slice(-181)[0], recoveredList.slice(-151)[0], recoveredList.slice(-121)[0], recoveredList.slice(-91)[0], recoveredList.slice(-61)[0], recoveredList.slice(-31)[0], recoveredList.slice(-1)[0]]] 
               },
               deathData: {
                 labels: ["M", "T", "W", "T", "F", "S", "S"],
-                series: [[deathList[6], deathList[36], deathList[66], deathList[96], deathList[126], deathList[156],deathList[186]]] 
+                series: [[deathList.slice(-181)[0], deathList.slice(-151)[0],deathList.slice(-121)[0], deathList.slice(-91)[0],deathList.slice(-61)[0],  deathList.slice(-31)[0],deathList.slice(-1)[0]]] 
               },
             casesOptions: {
               lineSmooth: Chartist.Interpolation.cardinal({
@@ -180,10 +179,10 @@ function  DataCharts (props) {
           };
 
             let casePercentage;
-          if (Math.sign(getPercentageChange(casesList[156],casesList[186])) ===1) {
+          if (Math.sign(getPercentageChange(casesList.slice(-31)[0],casesList.slice(-1)[0])) ===1) {
             casePercentage =    <p className={classes.cardCategory}>
             <span className={classes.successText}>
-              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange(casesList[156],casesList[186])}%
+              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange(casesList.slice(-31)[0],casesList.slice(-1)[0])}%
             </span>{" "}
             increase in the last month.
             
@@ -191,50 +190,48 @@ function  DataCharts (props) {
           } else {
             casePercentage = <p className={classes.cardCategory}>
             <span className={classes.dangerText}>
-              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange(casesList[156],casesList[186])}%
+              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange(casesList.slice(-31)[0],casesList.slice(-1)[0])}%
           
             </span>{" "}
             decrease in the last Month.
-            {casesList[156]}
-            <br/>
-            {casesList[186]}
+         
           </p>
           }
 
           let recoveredPercentage;
-          if (Math.sign(getPercentageChange( recoveredList[188], recoveredList[189])) ===1) {
+          if (Math.sign(getPercentageChange( recoveredList.slice(-31)[0], recoveredList.slice(-1)[0])) ===1) {
             recoveredPercentage =    <p className={classes.cardCategory}>
             <span className={classes.successText}>
-              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange( recoveredList[188], recoveredList[189])}%
+              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange( recoveredList.slice(-31)[0], recoveredList.slice(-1)[0])}%
             </span>{" "}
-            increase in the last 24hr.
+            increase in the last month.
             
           </p>
           } else {
             recoveredPercentage = <p className={classes.cardCategory}>
             <span className={classes.dangerText}>
-              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange( recoveredList[188], recoveredList[189])}%
+              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange(recoveredList.slice(-31)[0], recoveredList.slice(-1)[0])}%
             </span>{" "}
-            decrease in the last 24hr.
+            decrease in the last Month.
         
           </p>
           }
 
           let deathPercentage;
-          if (Math.sign(getPercentageChange( deathList[188], deathList[189])) ===1) {
+          if (Math.sign(getPercentageChange( deathList.slice(-31)[0],deathList.slice(-1)[0])) ===1) {
             deathPercentage =    <p className={classes.cardCategory}>
             <span className={classes.successText}>
-              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange( deathList[188], deathList[189])}%
+              <ArrowUpward className={classes.upArrowCardCategory} /> {getPercentageChange( deathList.slice(-31)[0],deathList.slice(-1)[0])}%
             </span>{" "}
-            increase in the last 24hr.
+            increase in the last month.
             
           </p>
           } else {
             deathPercentage = <p className={classes.cardCategory}>
             <span className={classes.dangerText}>
-              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange( deathList[188], deathList[189])}%
+              < ArrowDownward  className={classes.downArrowCardCategory} /> {getPercentageChange(  deathList.slice(-31)[0],deathList.slice(-1)[0])}%
             </span>{" "}
-            decrease in the last 24hr.
+            decrease in the last Month.
         
           </p>
           }
@@ -275,9 +272,9 @@ function  DataCharts (props) {
               />
             </CardHeader>
             <CardBody>
-             
+     
               <h4 className={classes.cardTitle}>Corona Virus Cases</h4>
-              <p>A total of <span className={classes.warningText}>{casesList[186]}</span> as of {getCurrentDate()}</p>
+              <p>A total of <span className={classes.warningText}>{numeral(casesList.slice(-1)[0]).format("0,0")}</span> as of {getCurrentDate()}</p>
            { casePercentage}
             </CardBody>
             <CardFooter chart>
@@ -303,7 +300,7 @@ function  DataCharts (props) {
             <CardBody>
              
               <h4 className={classes.cardTitle}>Recovered</h4>
-              <p>A total of <span className={classes.successText}>{recoveredList[186]}</span> as of {getCurrentDate()}</p>
+              <p>A total of <span className={classes.successText}>{numeral(recoveredList.slice(-1)[0]).format("0,0")}</span> as of {getCurrentDate()}</p>
              {recoveredPercentage}
             </CardBody>
             <CardFooter chart>
@@ -329,7 +326,7 @@ function  DataCharts (props) {
             <CardBody>
    
               <h4 className={classes.cardTitle}>Deaths</h4>
-              <p>A total of <span  className={classes.dangerText}>{deathList[186]}</span> as of {getCurrentDate()}</p>
+              <p>A total of <span  className={classes.dangerText}>{numeral(deathList.slice(-1)[0]).format("0,0")}</span> as of {getCurrentDate()}</p>
               {deathPercentage}
      
             </CardBody>
