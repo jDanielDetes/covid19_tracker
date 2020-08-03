@@ -1,5 +1,6 @@
-.scroll {
 
+
+ .table{
     height: 100px !important;     
     overflow-y: auto !important;    
     overflow-x: hidden !important;

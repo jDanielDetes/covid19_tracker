@@ -64,16 +64,18 @@ function LiveCasesChart(props) {
                 </h4>
               </CardHeader>
               <CardBody plain>
-                <Table
-                  hover
-                  tableHead={["Country", "Number positive"]}
-                  tableData={[
-                    ...Data.globalData.map((data) => [
-                      data.country,
-                      data.cases,
-                    ]),
-                  ]}
-                ></Table>
+             <div className="table">
+                    <Table
+                      hover
+                      tableHead={["Country", "Number positive"]}
+                      tableData={[
+                        ...Data.globalData.map((data) => [
+                          data.country,
+                          data.cases,
+                        ]),
+                      ]}
+                    ></Table>
+             </div>
               </CardBody>
             </Card>
           );

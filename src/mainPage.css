@@ -1,3 +1,23 @@
 body{
     background-color: black;
 }
+
+.mainApp{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.right__data{
+    justify-content: flex-start;
+    flex-grow: 4;
+}
+
+.left__data{
+justify-content: flex-end;
+flex-grow: 2;
+margin-top: 8rem;
+margin-left: 1rem;
+
+}
+

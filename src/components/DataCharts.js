@@ -104,7 +104,7 @@ function  DataCharts (props) {
                 series: [[ recoveredList.slice(-181)[0], recoveredList.slice(-151)[0], recoveredList.slice(-121)[0], recoveredList.slice(-91)[0], recoveredList.slice(-61)[0], recoveredList.slice(-31)[0], recoveredList.slice(-1)[0]]] 
               },
               deathData: {
-                labels: ["M", "T", "W", "T", "F", "S", "S"],
+                labels: ["Jan", "Feb", "March", "April", "May", "June", "July",],
                 series: [[deathList.slice(-181)[0], deathList.slice(-151)[0],deathList.slice(-121)[0], deathList.slice(-91)[0],deathList.slice(-61)[0],  deathList.slice(-31)[0],deathList.slice(-1)[0]]] 
               },
             casesOptions: {
@@ -259,6 +259,10 @@ function  DataCharts (props) {
         return (
             
             <div>
+              <div className="header__">
+                    <h1 className="title">COVID-19 TRACKER</h1>
+                    {countrySelect}
+              </div>
                   <GridContainer>
         <GridItem xs={12} sm={12} md={4}>
           <Card chart >
@@ -338,7 +342,7 @@ function  DataCharts (props) {
           </Card>
         </GridItem>
       </GridContainer>
-            {countrySelect}
+            
             
       
             </div>
