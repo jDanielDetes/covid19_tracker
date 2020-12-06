@@ -268,7 +268,7 @@ function  DataCharts (props) {
             </CardHeader>
             <CardBody>
      
-              <h4 className={classes.cardTitle}>Corona Virus Cases</h4>
+              <h4 className={classes.cardTitle}>Coronavirus Cases</h4>
               <p>A total of <span className={classes.warningText}>{numeral(casesList.slice(-1)[0]).format("0,0")}</span> as of {getCurrentDate()}</p>
            { casePercentage}
             </CardBody>
